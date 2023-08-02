@@ -96,3 +96,7 @@ def change_todo(request , id  , status):
 def signout(request):
     logout(request)
     return redirect('login')
+
+
+def resume(request):
+    return render(request, 'resume.html')

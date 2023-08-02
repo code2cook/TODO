@@ -15,13 +15,25 @@
 <body>
     <!-- navabar start -->
     <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">TODO</a>
+        <a class="navbar-brand" href="/">Welcome TO The Blog</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+
+                {% comment %} {% url 'home' as url %} {% endcomment %}
+                <li class="nav-item">
+                    <a
+                      class="nav-link {% if request.path == url %}active{% endif %}"
+                      aria-current="page"
+                      href="{% url 'home' %}"
+                      >Home</a
+                    >
+                  </li>
+
+                  
 
                 {% if request.user.is_authenticated %}
                 <li class="nav-item">
@@ -37,6 +49,15 @@
                 </li>
 
                 {% endif %}
+
+                {% url 'resume' as url %}
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.path == url %}active{% endif %}"
+                href="{% url 'resume'%}"
+                >About Me</a
+              >
+            </li>
 
 
             </ul>
@@ -56,6 +77,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
+
+
+        <footer class="py-5 bg-dark fixed-bottom" >
+            <div class="container px-4 px-lg-5">
+              <p class="m-0 text-center text-white">
+                Copyright &copy; Your Website 2023
+              </p>
+            </div>
+          </footer>
 </body>
 
 </html>
