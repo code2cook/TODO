@@ -1,14 +1,15 @@
 {% extends 'base.html' %} 
 {% block content %}
+{% load static %}
 
 <div id="page-top">
   <!-- Navigation-->
-  {% comment %} <link href="{% static 'css/resume_styles.css'%}" rel="stylesheet" /> {% endcomment %}
+  <link href="{% static 'css/resume_styles.css'%}" rel="stylesheet" />
   <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary " id="sideNav">
       <a class="navbar-brand js-scroll-trigger" href="#page-top">
           <span class="d-block d-lg-none">Wei Wang</span>
-          {% comment %} <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'picture/me.jpg' %}" alt="..." /></span> {% endcomment %}
+          <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'picture/myphoto.jpg' %}" alt="..." /></span>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
