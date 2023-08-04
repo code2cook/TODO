@@ -6,6 +6,7 @@ COPY . .
 
 
 RUN python manage.py migrate
+RUN python manage.py collectstatic
 
 
 CMD ["python","manage.py","runserver","0.0.0.0:8001"]
