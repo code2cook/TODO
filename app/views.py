@@ -100,3 +100,7 @@ def signout(request):
 
 def resume(request):
     return render(request, 'resume.html')
+
+def foodPage(request):
+    return render(request, 'foodPage.html')
+

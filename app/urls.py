@@ -13,4 +13,5 @@ urlpatterns = [
    path('change-status/<int:id>/<str:status>' , change_todo ), 
    path('logout/' , signout ), 
    path('resume/', views.resume, name='resume'),
+   path('foodPage/', views.foodPage, name='foodPage'),
 ]
