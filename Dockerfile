@@ -4,7 +4,8 @@ RUN pip install django==3.2
 
 COPY . .
 
-
+RUN pip install --no-cache-dir -r requirements.txt
+RUN python manage.py makemigrations
 RUN python manage.py migrate
 RUN python manage.py collectstatic
 
