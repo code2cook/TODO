@@ -2,6 +2,8 @@
 
 from pathlib import Path
 
+from storages.backends.s3boto3 import S3Boto3Storage
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -112,4 +114,18 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [BASE_DIR /'app/static/']
 
+
+# AWS settings
+AWS_ACCESS_KEY_ID = 'AKIASMG7BS4EEVWRMGXV'
+AWS_SECRET_ACCESS_KEY = '837Y6/Jg79YMScxrCrsjXjGBnE1GZLYXxsHHgxkZ'
+AWS_STORAGE_BUCKET_NAME = 'myblog-s3-storage'
+AWS_S3_REGION_NAME = 'us-east-1'  # e.g., 'us-east-1'
+
+# For serving static files directly from S3
+STATIC_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# For serving media files (user-uploaded files) from S3
+# MEDIA_URL = 'https://%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
