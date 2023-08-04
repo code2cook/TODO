@@ -118,9 +118,9 @@ STATICFILES_DIRS = [BASE_DIR /'app/static/']
 
 
 
-
+AWS_S3_REGION_NAME = 'us-east-1' 
 # Initialize AWS Secrets Manager client
-secrets_manager_client = boto3.client('secretsmanager')
+secrets_manager_client = boto3.client('secretsmanager',region_name = AWS_S3_REGION_NAME )
 
 # Function to retrieve the secret value from AWS Secrets Manager
 def get_secret_value(secret_name):
@@ -138,7 +138,7 @@ SECRET_KEY = secrets['SECRET_KEY']
 AWS_ACCESS_KEY_ID = secrets['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = secrets['AWS_SECRET_ACCESS_KEY']
 AWS_STORAGE_BUCKET_NAME = secrets['AWS_STORAGE_BUCKET_NAME']
-AWS_S3_REGION_NAME = 'us-east-1'  # e.g., 'us-east-1'
+ # e.g., 'us-east-1'
 
 # For serving static files directly from S3
 STATIC_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
