@@ -85,7 +85,7 @@ def signup(request):
         
 @login_required(login_url='login')
 def add_todo(request):
-    print("code are there fekwnfekwjnfkejfnwek")
+    
     
     if request.user.is_authenticated and request.method == 'POST':
         user = request.user
@@ -97,17 +97,17 @@ def add_todo(request):
          
             s3 = boto3.client('s3',region_name='us-east-1', aws_access_key_id=settings.AWS_ACCESS_KEY_ID, aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
             file_obj = request.FILES['picture']
-            
             s3.upload_fileobj(file_obj, 'django-media-s3-myblog', file_obj.name)
             
             # Save the S3 URL and other attributes in the database
             picture_url = f'https://django-media-s3-myblog.s3.amazonaws.com/{file_obj.name}'
             foodName = form.cleaned_data['foodName']
-            common= form.cleaned_data['common']
-            UploadedPicture.objects.create(foodName=foodName, common=common, image_url=picture_url)
+            comment= form.cleaned_data['comment']
+            # need to create model to save in db
+            # UploadedPicture.objects.create(foodName=foodName, comment=comment, image_url=picture_url)
             return redirect('resume')  # Redirect to a success page
     else:
-        print("code are there   should go herer too fekwnfekwjnfkejfnwek")
+        
         form = PictureUploadForm()
     return render(request, 'upload_picture.html', {'form': form})
 
