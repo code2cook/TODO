@@ -52,7 +52,7 @@ MIDDLEWARE = [
 ]
 
 CSRF_COOKIE_DOMAIN = 'myblogs.click'
-CSRF_TRUSTED_ORIGINS = ['myblogs.click']
+CSRF_TRUSTED_ORIGINS = ['https://myblogs.click']
 
 
 

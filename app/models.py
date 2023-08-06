@@ -32,13 +32,14 @@ class TODO(models.Model):
     priority = models.CharField(max_length=2 , choices=priority_choices)
     
 class FoodPage(models.Model):
+    id = models.BigAutoField(primary_key=True)
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
     cover_image_url = models.CharField(max_length=255)
-    description = models.TextField()
-    publication_date = models.DateField()
+    description = models.TextField(max_length=200)
+    publication_date = models.DateField(auto_now_add=True)
     
 class UploadedPicture(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(max_length=200)
     image_url = models.URLField()
