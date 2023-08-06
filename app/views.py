@@ -3,10 +3,10 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate , login as loginUser , logout
 from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
 # Create your views here.
-from app.forms import TODOForm
-from app.models import TODO
+from app.forms import PictureUploadForm, TODOForm
+from app.models import TODO, UploadedPicture
 from django.contrib.auth.decorators import login_required
-
+import boto3
 
 @login_required(login_url='login')
 def home(request):
@@ -14,7 +14,8 @@ def home(request):
         user = request.user
         form = TODOForm()
         todos = TODO.objects.filter(user = user).order_by('priority')
-        return render(request , 'index.html' , context={'form' : form , 'todos' : todos})
+        uploadPicture = PictureUploadForm()
+        return render(request , 'index.html' , context={'form' : form , 'todos' : todos, 'uploadPicture': uploadPicture})
 
 def login(request):
     if request.method == 'GET':
@@ -64,22 +65,44 @@ def signup(request):
 
 
 
+# @login_required(login_url='login')
+# def add_todo(request):
+#     if request.user.is_authenticated:
+#         user = request.user
+#         print(user)
+#         form = TODOForm(request.POST)
+#         if form.is_valid():
+#             print(form.cleaned_data)
+#             todo = form.save(commit=False)
+#             todo.user = user
+#             todo.save()
+#             print(todo)
+#             return redirect("home")
+#         else: 
+#             return render(request , 'index.html' , context={'form' : form})
+        
+        
 @login_required(login_url='login')
 def add_todo(request):
     if request.user.is_authenticated:
         user = request.user
         print(user)
-        form = TODOForm(request.POST)
+        form = PictureUploadForm(request.POST, request.FILES)
         if form.is_valid():
-            print(form.cleaned_data)
-            todo = form.save(commit=False)
-            todo.user = user
-            todo.save()
-            print(todo)
-            return redirect("home")
-        else: 
-            return render(request , 'index.html' , context={'form' : form})
-
+            s3 = boto3.client('s3', aws_access_key_id='YOUR_ACCESS_KEY', aws_secret_access_key='YOUR_SECRET_KEY')
+            file_obj = request.FILES['picture']
+            file_name = file_obj.name
+            s3.upload_fileobj(file_obj, 'YOUR_S3_BUCKET_NAME', file_name)
+            
+            # Save the S3 URL and other attributes in the database
+            picture_url = f'https://YOUR_S3_BUCKET_NAME.s3.amazonaws.com/{file_name}'
+            title = form.cleaned_data['title']
+            description = form.cleaned_data['description']
+            UploadedPicture.objects.create(title=title, description=description, image_url=picture_url)
+            return redirect('success_url')  # Redirect to a success page
+    else:
+        form = PictureUploadForm()
+    return render(request, 'upload_picture.html', {'form': form})
 
 def delete_todo(request , id ):
     print(id)

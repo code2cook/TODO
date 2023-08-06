@@ -23,13 +23,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
 
-                {% comment %} {% url 'home' as url %} {% endcomment %}
+                {% url 'home' as url %}
                 <li class="nav-item">
                     <a
                       class="nav-link {% if request.path == url %}active{% endif %}"
                       aria-current="page"
                       href="{% url 'home' %}"
-                      >Home</a
+                      >Upload Food Card</a
                     >
                   </li>
 
@@ -47,16 +47,19 @@
                   
 
                 {% if request.user.is_authenticated %}
+                {% url 'signout' as url %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
+                    <a class="nav-link {% if request.path == url %}active{% endif %}" href="{% url 'signout' %}">Logout</a>
                 </li>
 
                 {% else %}
+                {% url 'login' as url %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link {% if request.path == url %}active{% endif %}" href="{% url 'login' %}">Login</a>
                 </li>
+                {% url 'signup' as url %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/signup">Signup</a>
+                    <a class="nav-link {% if request.path == url %}active{% endif %}" href="{% url 'signup' %}">Signup</a>
                 </li>
 
                 {% endif %}
@@ -90,8 +93,8 @@
         crossorigin="anonymous"></script>
 
 
-        <footer class="py-5 bg-dark fixed-bottom" >
-            <div class="container px-4 px-lg-5">
+        <footer class="py-3 bg-dark fixed-bottom" >
+            <div class="container px-3 px-lg-3">
               <p class="m-0 text-center text-white">
                 Copyright &copy; Your Website 2023
               </p>

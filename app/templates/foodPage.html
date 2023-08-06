@@ -1,6 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
+<div>
 
+    <section class="jumbotron text-center" id="mainBanner">
+        <div class="container">
+            <h1 class="jumbotron-heading">Food Card</h1>
+            <p class="lead text-muted">Feel free to share your post about food at UTSC. The restaurant owner will love to review the post and make imporvement. </p>
+            <p class="lead text-muted">
+                Together we will make UTSC food court better.
+            </p>
+            <p>
+                <a href="{% url 'home' %}" class="btn btn-primary my-2">Add Post</a>
+            </p>
+            
+        </div>
+    </section>
+
+
+</div>
 
 <div class="album py-5 bg-light">
     <div class="container">

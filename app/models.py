@@ -30,3 +30,15 @@ class TODO(models.Model):
     user  = models.ForeignKey(User  , on_delete= models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     priority = models.CharField(max_length=2 , choices=priority_choices)
+    
+class FoodPage(models.Model):
+    title = models.CharField(max_length=100)
+    author = models.CharField(max_length=100)
+    cover_image_url = models.CharField(max_length=255)
+    description = models.TextField()
+    publication_date = models.DateField()
+    
+class UploadedPicture(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    image_url = models.URLField()
