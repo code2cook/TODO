@@ -154,48 +154,48 @@ STATICFILES_DIRS = [BASE_DIR /'app/static/']
 
 
 
-# def get_secret(secret_name, region_name):
-#     # Create a Secrets Manager client
-#     session = boto3.session.Session()
-#     client = session.client(service_name='secretsmanager', region_name=region_name)
+def get_secret(secret_name, region_name):
+    # Create a Secrets Manager client
+    session = boto3.session.Session()
+    client = session.client(service_name='secretsmanager', region_name=region_name)
 
-#     try:
-#         # Get the secret value
-#         response = client.get_secret_value(SecretId=secret_name)
+    try:
+        # Get the secret value
+        response = client.get_secret_value(SecretId=secret_name)
 
-#         # Decrypt the secret value if necessary
-#         if 'SecretString' in response:
-#             secret = response['SecretString']
-#         else:
-#             decoded_binary_secret = base64.b64decode(response['SecretBinary'])
-#             secret = decoded_binary_secret.decode('utf-8')
+        # Decrypt the secret value if necessary
+        if 'SecretString' in response:
+            secret = response['SecretString']
+        else:
+            decoded_binary_secret = base64.b64decode(response['SecretBinary'])
+            secret = decoded_binary_secret.decode('utf-8')
 
-#         return secret
-#     except ClientError as e:
-#         # Error handling code here
-#         pass
+        return secret
+    except ClientError as e:
+        # Error handling code here
+        pass
     
-# secret_name = "MyDjangoAppSecrets"
+secret_name = "MyDjangoAppSecrets"
 region_name = "us-east-1"
 
-# secret_value= get_secret(secret_name, region_name)
+secret_value= get_secret(secret_name, region_name)
 
-# secrets= json.loads(secret_value)
-
-
+secrets= json.loads(secret_value)
 
 
-# SECRET_KEY = secrets.get('SECRET_KEY')
-# # AWS settings
-# AWS_ACCESS_KEY_ID = secrets.get('AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = secrets.get('AWS_SECRET_ACCESS_KEY')
-# AWS_STORAGE_BUCKET_NAME = secrets.get('AWS_STORAGE_BUCKET_NAME')
 
 
-SECRET_KEY = '4dq_8o)0)**l=9n(#@u^d9*akz07l0-i)q&9h#vj4=-a7r)_87'
-AWS_ACCESS_KEY_ID = 'AKIASMG7BS4EEVWRMGXV'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME ='myblog-s3-storage'
+SECRET_KEY = secrets.get('SECRET_KEY')
+# AWS settings
+AWS_ACCESS_KEY_ID = secrets.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = secrets.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = secrets.get('AWS_STORAGE_BUCKET_NAME')
+
+
+# SECRET_KEY = '4dq_8o)0)**l=9n(#@u^d9*akz07l0-i)q&9h#vj4=-a7r)_87'
+# AWS_ACCESS_KEY_ID = 'AKIASMG7BS4EEVWRMGXV'
+# AWS_SECRET_ACCESS_KEY = '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'
+# AWS_STORAGE_BUCKET_NAME ='myblog-s3-storage'
 
 # For serving static files directly from S3
 STATIC_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
