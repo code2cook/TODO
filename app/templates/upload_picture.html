@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+  <div class="container pt-4">
+    <div class="row  p-0 mt-4">
+      
+      <div class="col-lg-5 mx-auto shadow p-0 ">
+        <div class="alert alert-info">
+          <h2>Add New Food Picture</h2>
+        </div>
+        <div class="p-4">
+          <form class="form-group" enctype="multipart/form-data" method="POST" >
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Upload</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from app.models import TODO, FoodPage
+from app.models import UploadedPicture
 # Register your models here.
-admin.site.register(TODO)
-admin.site.register(FoodPage)
+
+
+admin.site.register(UploadedPicture)

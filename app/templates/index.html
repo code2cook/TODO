@@ -1,85 +1,181 @@
 {% extends 'base.html' %}
 {% block content %}
 <div>
-  <div class="container pt-4">
-    <div class="row  p-0 mt-4">
-      
-      <div class="col-lg-5 mx-auto shadow p-0 ">
-        <div class="alert alert-info">
-          <h2>Add picture</h2>
-        </div>
-        <div class="p-4">
-          <form class="form-group" enctype="multipart/form-data" method="POST">
-            {% csrf_token %}
-            {{ uploadPicture.as_p }}
-            <button type="submit">Upload</button>
-          </form>
-        </div>
+
+  <section class="jumbotron text-center" id="mainBanner">
+      <div class="container">
+          <h1 class="jumbotron-heading">Food Card</h1>
+          <p class="lead text-muted">Feel free to share your post about food at UTSC. The restaurant owner will love to review the post and make imporvement. </p>
+          <p class="lead text-muted">
+              Together we will make UTSC food court better.
+          </p>
+          <p>
+              <a href="{% url 'home' %}" class="btn btn-primary my-2">Add Post</a>
+          </p>
+          
+      </div>
+  </section>
+
+
+</div>
+
+<div class="album py-5 bg-light">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12" id="collection-heading">
+              <span>My Collection</span>
+          </div>
       </div>
 
-
-      {% comment %} <div class="col">
-        <div class="border">
-
-          {% if todos|length == 0 %}
-
-          <div class="p-4">
-            <br>
-            <br>
-            <div class="alert alert-info text-center">
-              <p class="" style="font-size: 30px;">No Todos</p>
-            </div>
-            <br>
-            <br>
+      <div class="row">
+          <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                  <img class="card-img-top" src="img/thumbnail.png" alt="Card image cap">
+                  <div class="card-body">
+                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.
+                          This content is a little bit longer.</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                          <div class="btn-group">
+                              <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                              <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                          </div>
+                          <small class="text-muted">12 mins</small>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                  <img class="card-img-top" src="img/thumbnail.png" alt="Card image cap">
+                  <div class="card-body">
+                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.
+                          This content is a little bit longer.</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                          <div class="btn-group">
+                              <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                              <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                          </div>
+                          <small class="text-muted">12 mins</small>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                  <img class="card-img-top" src="img/thumbnail.png" alt="Card image cap">
+                  <div class="card-body">
+                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.
+                          This content is a little bit longer.</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                          <div class="btn-group">
+                              <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                              <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                          </div>
+                          <small class="text-muted">12 mins</small>
+                      </div>
+                  </div>
+              </div>
           </div>
 
-          {%else%}
-          <div>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Title</th>
-                  <th>Status</th>
-                  <th>Priority</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-
-              <tbody>
-
-                {% for todo in todos %}
-                <tr>
-                  <td>{{forloop.counter}}</td>
-                  <td>{{todo.title}}</td>
-                  <td>
-                    {% if todo.status == 'C'%}
-                    ✅
-                    {%else%}
-                    🕒
-                    {%endif%}
-                  </td>
-                  <td>{{todo.priority}}</td>
-                  <td>
-                    <a href="/delete-todo/{{todo.id}}" title="Delete" class="">🗑️</a>
-                    {% if todo.status == 'P'%}
-                    <a href="/change-status/{{todo.id}}/C" title="Mark Completed" class="">✅</a>
-                    {%else%}
-                    <a href="/change-status/{{todo.id}}/P" title="Mark Pending" class="">🕒</a>
-                    {%endif%}
-                  </td>
-                </tr>
-                {%endfor%}
-
-
-              </tbody>
-            </table>
+          <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                  <img class="card-img-top" src="img/thumbnail.png" alt="Card image cap">
+                  <div class="card-body">
+                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.
+                          This content is a little bit longer.</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                          <div class="btn-group">
+                              <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                              <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                          </div>
+                          <small class="text-muted">12 mins</small>
+                      </div>
+                  </div>
+              </div>
           </div>
-          {%endif%} 
+          <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                  <img class="card-img-top" src="img/thumbnail.png" alt="Card image cap">
+                  <div class="card-body">
+                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.
+                          This content is a little bit longer.</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                          <div class="btn-group">
+                              <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                              <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                          </div>
+                          <small class="text-muted">12 mins</small>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                  <img class="card-img-top" src="img/thumbnail.png" alt="Card image cap">
+                  <div class="card-body">
+                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.
+                          This content is a little bit longer.</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                          <div class="btn-group">
+                              <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                              <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                          </div>
+                          <small class="text-muted">12 mins</small>
+                      </div>
+                  </div>
+              </div>
+          </div>
 
-      </div> {% endcomment %}
+          <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                  <img class="card-img-top" src="img/thumbnail.png" alt="Card image cap">
+                  <div class="card-body">
+                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.
+                          This content is a little bit longer.</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                          <div class="btn-group">
+                              <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                              <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                          </div>
+                          <small class="text-muted">12 mins</small>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                  <img class="card-img-top" src="img/thumbnail.png" alt="Card image cap">
+                  <div class="card-body">
+                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.
+                          This content is a little bit longer.</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                          <div class="btn-group">
+                              <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                              <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                          </div>
+                          <small class="text-muted">12 mins</small>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                  <img class="card-img-top" src="img/thumbnail.png" alt="Card image cap">
+                  <div class="card-body">
+                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.
+                          This content is a little bit longer.</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                          <div class="btn-group">
+                              <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                              <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                          </div>
+                          <small class="text-muted">12 mins</small>
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>
-    </div>
   </div>
 </div>
+
 {% endblock %}

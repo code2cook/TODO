@@ -23,26 +23,30 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
 
-                {% url 'home' as url %}
+
+
+              {% url 'home' as url %}
                 <li class="nav-item">
                     <a
                       class="nav-link {% if request.path == url %}active{% endif %}"
                       aria-current="page"
                       href="{% url 'home' %}"
-                      >Upload Food Card</a
-                    >
-                  </li>
-
-
-                  {% url 'foodPage' as url %}
-                  <li class="nav-item">
-                    <a
-                      class="nav-link {% if request.path == url %}active{% endif %}"
-                      aria-current="page"
-                      href="{% url 'foodPage' %}"
                       >Food Page</a
                     >
-                  </li>
+                  </li> 
+
+                  {% url 'uploadFoodCard' as url %}
+                  <li class="nav-item">
+                      <a
+                        class="nav-link {% if request.path == url %}active{% endif %}"
+                        aria-current="page"
+                        href="{% url 'uploadFoodCard' %}"
+                        >Upload Food Card</a
+                      >
+                    </li>
+
+
+            
 
                   
 
@@ -63,7 +67,6 @@
                 </li>
 
                 {% endif %}
-
                 {% url 'resume' as url %}
             <li class="nav-item">
               <a

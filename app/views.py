@@ -3,19 +3,19 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate , login as loginUser , logout
 from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
 # Create your views here.
-from app.forms import PictureUploadForm, TODOForm
-from app.models import TODO, UploadedPicture
+from app.forms import PictureUploadForm
+from app.models import UploadedPicture
 from django.contrib.auth.decorators import login_required
 import boto3
+
+from django.conf import settings
 
 @login_required(login_url='login')
 def home(request):
     if request.user.is_authenticated:
         user = request.user
-        form = TODOForm()
-        todos = TODO.objects.filter(user = user).order_by('priority')
         uploadPicture = PictureUploadForm()
-        return render(request , 'index.html' , context={'form' : form , 'todos' : todos, 'uploadPicture': uploadPicture})
+        return render(request , 'index.html' , context={'uploadPicture': uploadPicture})
 
 def login(request):
     if request.method == 'GET':
@@ -42,6 +42,7 @@ def login(request):
 
 
 def signup(request):
+    
 
     if request.method == 'GET':
         form = UserCreationForm()
@@ -84,36 +85,32 @@ def signup(request):
         
 @login_required(login_url='login')
 def add_todo(request):
-    if request.user.is_authenticated:
+    print("code are there fekwnfekwjnfkejfnwek")
+    
+    if request.user.is_authenticated and request.method == 'POST':
         user = request.user
         print(user)
         form = PictureUploadForm(request.POST, request.FILES)
+        
         if form.is_valid():
-            s3 = boto3.client('s3', aws_access_key_id='YOUR_ACCESS_KEY', aws_secret_access_key='YOUR_SECRET_KEY')
+            
+         
+            s3 = boto3.client('s3',region_name='us-east-1', aws_access_key_id=settings.AWS_ACCESS_KEY_ID, aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
             file_obj = request.FILES['picture']
-            file_name = file_obj.name
-            s3.upload_fileobj(file_obj, 'YOUR_S3_BUCKET_NAME', file_name)
+            
+            s3.upload_fileobj(file_obj, 'django-media-s3-myblog', file_obj.name)
             
             # Save the S3 URL and other attributes in the database
-            picture_url = f'https://YOUR_S3_BUCKET_NAME.s3.amazonaws.com/{file_name}'
-            title = form.cleaned_data['title']
-            description = form.cleaned_data['description']
-            UploadedPicture.objects.create(title=title, description=description, image_url=picture_url)
-            return redirect('success_url')  # Redirect to a success page
+            picture_url = f'https://django-media-s3-myblog.s3.amazonaws.com/{file_obj.name}'
+            foodName = form.cleaned_data['foodName']
+            common= form.cleaned_data['common']
+            UploadedPicture.objects.create(foodName=foodName, common=common, image_url=picture_url)
+            return redirect('resume')  # Redirect to a success page
     else:
+        print("code are there   should go herer too fekwnfekwjnfkejfnwek")
         form = PictureUploadForm()
     return render(request, 'upload_picture.html', {'form': form})
 
-def delete_todo(request , id ):
-    print(id)
-    TODO.objects.get(pk = id).delete()
-    return redirect('home')
-
-def change_todo(request , id  , status):
-    todo = TODO.objects.get(pk = id)
-    todo.status = status
-    todo.save()
-    return redirect('home')
 
 
 def signout(request):
@@ -122,6 +119,7 @@ def signout(request):
 
 
 def resume(request):
+    print("this is my resume ")
     return render(request, 'resume.html')
 
 def foodPage(request):
