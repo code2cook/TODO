@@ -4,7 +4,6 @@ from django.contrib.auth import authenticate , login as loginUser , logout
 from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
 # Create your views here.
 from app.forms import PictureUploadForm
-from app.models import UploadedPicture
 from django.contrib.auth.decorators import login_required
 import boto3
 
