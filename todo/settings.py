@@ -129,31 +129,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR /'app/static/']
 
 
-
-# AWS_S3_REGION_NAME = 'us-east-1' 
-# # Initialize AWS Secrets Manager client
-# secrets_manager_client = boto3.client('secretsmanager',region_name = AWS_S3_REGION_NAME )
-
-# # Function to retrieve the secret value from AWS Secrets Manager
-# def get_secret_value(secret_name):
-#     response = secrets_manager_client.get_secret_value(SecretId=secret_name)
-#     if 'SecretString' in response:
-#         return json.loads(response['SecretString'])
-#     raise ValueError('Secret value not found')
-
-# secrets = get_secret_value('MyDjangoAppSecrets')
-
-# AWS_ACCESS_KEY_ID = secrets['AWS_ACCESS_KEY_ID']
-
-# SECRET_KEY = secrets['SECRET_KEY']
-# # AWS settings
-# AWS_ACCESS_KEY_ID = secrets['AWS_ACCESS_KEY_ID']
-# AWS_SECRET_ACCESS_KEY = secrets['AWS_SECRET_ACCESS_KEY']
-# AWS_STORAGE_BUCKET_NAME = secrets['AWS_STORAGE_BUCKET_NAME']
-#  # e.g., 'us-east-1'
-
-
-
 def get_secret(secret_name, region_name):
     # Create a Secrets Manager client
     session = boto3.session.Session()
@@ -191,11 +166,6 @@ AWS_ACCESS_KEY_ID = secrets.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = secrets.get('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = secrets.get('AWS_STORAGE_BUCKET_NAME')
 
-
-# SECRET_KEY = '4dq_8o)0)**l=9n(#@u^d9*akz07l0-i)q&9h#vj4=-a7r)_87'
-# AWS_ACCESS_KEY_ID = 'AKIASMG7BS4EEVWRMGXV'
-# AWS_SECRET_ACCESS_KEY = '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'
-# AWS_STORAGE_BUCKET_NAME ='myblog-s3-storage'
 
 # For serving static files directly from S3
 STATIC_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
