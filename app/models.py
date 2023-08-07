@@ -19,3 +19,10 @@ class foodCard(models.Model):
     foodName = models.CharField(max_length=100)
     comments = models.TextField(max_length=200)
     image_url = models.URLField()
+    
+class foodCard2(models.Model):
+    id = models.AutoField(primary_key=True)
+    foodName = models.CharField(max_length=100)
+    comments = models.TextField(max_length=200)
+    author = models.CharField(max_length=20)
+    image_url = models.URLField()

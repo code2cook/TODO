@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
 from app.forms import PictureUploadForm
 from django.contrib.auth.decorators import login_required
 import boto3
-from .models import foodCard
+from .models import foodCard2
 
 from django.conf import settings
 
@@ -14,7 +14,7 @@ from django.conf import settings
 def home(request):
     if request.user.is_authenticated:
         user = request.user
-        foodCards = foodCard.objects.all()
+        foodCards = foodCard2.objects.all()
         return render(request , 'index.html' , context={'foodCard': foodCards})
 
 def login(request):
@@ -104,7 +104,7 @@ def add_todo(request):
             foodName = form.cleaned_data['foodName']
             comments= form.cleaned_data['comment']
             # need to create model to save in db
-            foodCard.objects.create(foodName=foodName, comments=comments, image_url=picture_url)
+            foodCard2.objects.create(foodName=foodName, comments=comments, author = user, image_url=picture_url)
             return redirect('home')
     else:
         
