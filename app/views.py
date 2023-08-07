@@ -105,7 +105,7 @@ def add_todo(request):
             comments= form.cleaned_data['comment']
             # need to create model to save in db
             foodCard.objects.create(foodName=foodName, comments=comments, image_url=picture_url)
-            return render(request , 'index.html' , context={'foodCard': foodCard})
+            return redirect('home')
     else:
         
         form = PictureUploadForm()
