@@ -13,3 +13,9 @@ from django.contrib.auth.models import User
 #     foodName = models.CharField(max_length=100)
 #     description = models.TextField(max_length=200)
 #     image_url = models.URLField()
+
+class foodCard(models.Model):
+    id = models.AutoField(primary_key=True)
+    foodName = models.CharField(max_length=100)
+    comments = models.TextField(max_length=200)
+    image_url = models.URLField()

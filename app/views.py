@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
 from app.forms import PictureUploadForm
 from django.contrib.auth.decorators import login_required
 import boto3
+from .models import foodCard
 
 from django.conf import settings
 
@@ -13,8 +14,8 @@ from django.conf import settings
 def home(request):
     if request.user.is_authenticated:
         user = request.user
-        uploadPicture = PictureUploadForm()
-        return render(request , 'index.html' , context={'uploadPicture': uploadPicture})
+        foodCards = foodCard.objects.all()
+        return render(request , 'index.html' , context={'foodCard': foodCards})
 
 def login(request):
     if request.method == 'GET':
@@ -101,10 +102,10 @@ def add_todo(request):
             # Save the S3 URL and other attributes in the database
             picture_url = f'https://django-media-s3-myblog.s3.amazonaws.com/{file_obj.name}'
             foodName = form.cleaned_data['foodName']
-            comment= form.cleaned_data['comment']
+            comments= form.cleaned_data['comment']
             # need to create model to save in db
-            # UploadedPicture.objects.create(foodName=foodName, comment=comment, image_url=picture_url)
-            return redirect('resume')  # Redirect to a success page
+            foodCard.objects.create(foodName=foodName, comments=comments, image_url=picture_url)
+            return render(request , 'index.html' , context={'foodCard': foodCard})
     else:
         
         form = PictureUploadForm()
