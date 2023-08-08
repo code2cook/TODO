@@ -11,5 +11,8 @@ urlpatterns = [
    path('logout/' , signout, name='signout' ), 
    path('resume/', views.resume, name='resume'),
    path('uploadFoodCard/', views.add_todo, name='uploadFoodCard'),
-   
+   path('likeBtn_action/<int:food_id>/', views.likeBtn_action, name='likeBtn_action'),
+   path('dislikeBtn_action/<int:food_id>/', views.dislikeBtn_action, name='dislikeBtn_action'),
+    path('like/<int:card_id>/', views.like_food, name='like_food'),
+    path('dislike/<int:card_id>/', views.dislike_food, name='dislike_food'),
 ]
