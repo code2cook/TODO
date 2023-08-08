@@ -6,7 +6,8 @@ from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
 from app.forms import PictureUploadForm
 from django.contrib.auth.decorators import login_required
 import boto3
-from .models import foodCard3 as foodCards
+
+from .models import foodCard4 as foodCards, Comment
 
 from django.conf import settings
 from django.http import JsonResponse
@@ -16,7 +17,8 @@ def home(request):
     if request.user.is_authenticated:
         user = request.user
         foodCard = foodCards.objects.all()
-        return render(request , 'index.html' , context={'foodCard': foodCard})
+        comments = Comment.objects.all()
+        return render(request , 'index.html' , context={'foodCard': foodCard, 'comments':comments})
 
 def login(request):
     if request.method == 'GET':
@@ -105,7 +107,8 @@ def add_todo(request):
             foodName = form.cleaned_data['foodName']
             comments= form.cleaned_data['comment']
             # need to create model to save in db
-            foodCards.objects.create(foodName=foodName, comments=comments, author = user, image_url=picture_url)
+            food = foodCards.objects.create(foodName=foodName, author = user, image_url=picture_url)
+            Comment.objects.create(food_card=food,text=comments)
             return redirect('home')
     else:
         
@@ -126,30 +129,33 @@ def resume(request):
 def foodPage(request):
     return render(request, 'foodPage.html')
 
-@login_required(login_url='login')
-def likeBtn_action(request, food_id):
-    food = foodCards.objects.get(id=food_id)
-    food.like_count += 1
-    food.save()
-    return JsonResponse({'likes': food.like_count})
+
 
 @login_required(login_url='login')
-def dislikeBtn_action(request, food_id):
-    food = foodCards.objects.get(id=food_id)
-    food.dislike_count += 1
-    food.save()
-    return JsonResponse({'dislikes': food.dislike_count})
-
-
-
 def like_food(request, card_id):
     card = foodCards.objects.get(pk=card_id)
     card.like_count += 1
     card.save()
     return JsonResponse({'likes': card.like_count})
 
+
+@login_required(login_url='login')
 def dislike_food(request, card_id):
     card = foodCards.objects.get(pk=card_id)
     card.dislike_count += 1
     card.save()
     return JsonResponse({'dislikes': card.dislike_count})
+
+def add_comment(request, card_id):
+    print("calling add_comment api")
+    print(card_id)
+    
+    if request.method == 'POST' and request.is_ajax():
+        card = foodCards.objects.get(id=card_id)
+        text = request.POST.get('comment_text')
+        Comment.objects.create(food_card=card,text=text)
+        Comments = Comment.objects.filter(food_card = card)
+        # Comment.objects.create(food_card=card,text=text)
+        # comment_list = list(Comments.values())
+        return JsonResponse({'comments': text})
+    return redirect('home')

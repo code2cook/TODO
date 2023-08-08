@@ -23,16 +23,44 @@
 
 
 <div class="card-columns">
-        
-      
+
+    {% if foodCard|length == 0 %}
+    <div><p>No data herre</p></div>
+
+    {% else %}  
+    
+    
+
+
         {% for card in foodCard %}
     
-        <div class="food-card card">
+        <div class="food-card card ">
             <img style="card-img-top" 
             src="{{card.image_url}}" alt="{{card.foodName}}"> 
           <div class="card-body">
             <h5 class="card-title">{{ card.foodName }}</h5>
-            <p class="card-text">{{ card.comments }}</p>
+            <p class="card-text">
+               
+                <ul id="comment-list-{{ card.id }}">
+                {% for comment in card.get_comments %}
+                
+                <li>{{ comment.text }}</li>
+                {% endfor %}
+                </ul>  
+            </p>
+
+
+
+            <button id="add-comment-button-{{ card.id }}" data-button-id="{{ card.id }}" class="comment-button">Add Comment</button>
+            <form id="comment-form-{{ card.id }}" class="comment-form" data-form-id="{{ card.id }}" method="post" action="{% url 'add_comment' card_id=card.id %}" style="display: none;">
+                {% csrf_token %}
+                <textarea name="comment_text" rows="3" cols="40"></textarea><br>
+                <button type="submit">Submit Comment</button>
+            </form>
+
+
+            
+
           </div>
           <div class="card-footer d-flex justify-content-between align-items-center">
             <div>
@@ -45,7 +73,9 @@
             </div>
           </div>
         </div>
-        {% endfor %}
+        {%endfor%}
+
+        {%endif%}
     
     </div>
       
@@ -53,8 +83,60 @@
 
 
 <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        addButtons = document.querySelectorAll('.comment-button');
+        commentForms = document.querySelectorAll('.comment-form');
+
+
+        addButtons.forEach(addButton =>{
+            addButton.addEventListener('click', event =>{
+                
+                const formId = event.target.dataset.buttonId;
+                
+                addButton.style.display = 'none';
+                commentForm = document.getElementById(`comment-form-${formId}`);
+                commentForm.style.display = 'block';
+
+            });
+        });
+
+        commentForms.forEach(commentForm =>{
+            commentForm.addEventListener('submit', (event) =>{
+                const formId = event.target.dataset.formId;
+                event.preventDefault();
+                const formData = new FormData(commentForm);
+                commentForm.style.display = 'none';
+                commentForm.reset();
+
+
+                btn = document.getElementById(`add-comment-button-${formId}`);
+                btn.style.display = '';
+
+                fetch(commentForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers:{
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                })
+                .then(response => response.json())
+                .then(data =>{
+                    
+                    var ul = document.getElementById(`comment-list-${formId}`);
+                    var newLi = document.createElement('li');
+                    newLi.textContent = data.comments;
+                    ul.appendChild(newLi);
+                    
+                })
+                .catch(error =>{
+                    console.error('Error submitting comment:', error);
+                });
+            });
+        });
+    });
     
-      document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
         
         const cardContainers = document.querySelectorAll('.food-card');
     
@@ -64,14 +146,18 @@
                 const cardId = targetButton.dataset.cardId;
     
                 if (targetButton.classList.contains('like-button')) {
-                    console.log("like button click");
+                 
                     updateCount(cardId, 'like');
                 } else if (targetButton.classList.contains('dislike-button')) {
-                    console.log("dislike button click update");
+                   
+                
                     updateCount(cardId, 'dislike');
                 }
             });
         });
+
+
+
     });
     
     function updateCount(cardId, action) {
@@ -79,8 +165,7 @@
         fetch(`/${action}/${cardId}/`)
         .then(response => response.json())
         .then(data => {
-            console.log("updateing data");
-            console.log(data['likes']);
+            
             countElement = document.querySelector(`#${action}s-count-${cardId}`);
             countElement.textContent = data[action + 's']; // Update likes or dislikes count
         })
@@ -88,7 +173,8 @@
             console.error(`Error ${action}ing card:`, error);
         });
     }
-    
+
+
 
   </script>
 
