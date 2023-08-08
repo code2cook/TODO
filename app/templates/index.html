@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block content %}
+
 <div>
   <section class="jumbotron text-center" id="mainBanner">
     <div class="container">
@@ -19,34 +20,37 @@
   </section>
 </div>
 
-<div class="card-deck">
+
+
+<div class="card-columns">
+        
+      
+        {% for card in foodCard %}
     
-  
-    {% for card in foodCard %}
-
-    <div class="food-card card">
-        <img style="card-img-top" 
-        src="{{card.image_url}}" alt="{{card.foodName}}"> 
-      <div class="card-body">
-        <h5 class="card-title">{{ card.foodName }}</h5>
-        <p class="card-text">{{ card.comments }}</p>
-      </div>
-      <div class="card-footer d-flex justify-content-between align-items-center">
-        <div>
-        <button class="like-button" data-card-id="{{ card.id }}">Like</button>
-        <span id="likes-count-{{ card.id }}">{{ card.like_count }}</span>
-        <button class="dislike-button" data-card-id="{{ card.id }}">Dislike</button>
-        <span id="dislikes-count-{{ card.id }}">{{ card.dislike_count }}</span>
+        <div class="food-card card">
+            <img style="card-img-top" 
+            src="{{card.image_url}}" alt="{{card.foodName}}"> 
+          <div class="card-body">
+            <h5 class="card-title">{{ card.foodName }}</h5>
+            <p class="card-text">{{ card.comments }}</p>
+          </div>
+          <div class="card-footer d-flex justify-content-between align-items-center">
+            <div>
+            <button class="like-button" data-card-id="{{ card.id }}">Like</button>
+            <span id="likes-count-{{ card.id }}">{{ card.like_count }}</span>
+            <button class="dislike-button" data-card-id="{{ card.id }}">Dislike</button>
+            <span id="dislikes-count-{{ card.id }}">{{ card.dislike_count }}</span>
+            </div>
+            <div>  <small class="text-muted">Uploaded By {{card.author}}</small>
+            </div>
+          </div>
         </div>
-        <div>  <small class="text-muted">Uploaded By {{card.author}}</small>
-        </div>
-      </div>
+        {% endfor %}
+    
     </div>
-    {% endfor %}
+      
+    </div>
 
-
-  </div>
-</div>
 
 <script>
     
