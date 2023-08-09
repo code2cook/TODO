@@ -147,8 +147,6 @@ def dislike_food(request, card_id):
     return JsonResponse({'dislikes': card.dislike_count})
 
 def add_comment(request, card_id):
-    print("calling add_comment api")
-    print(card_id)
     
     if request.method == 'POST' and request.is_ajax():
         card = foodCards.objects.get(id=card_id)
@@ -157,5 +155,7 @@ def add_comment(request, card_id):
         Comments = Comment.objects.filter(food_card = card)
         # Comment.objects.create(food_card=card,text=text)
         # comment_list = list(Comments.values())
-        return JsonResponse({'comments': text})
+        response = JsonResponse({'comments': text})
+        response['X-Requested-With'] = 'XMLHttpRequest'
+        return response
     return redirect('home')
