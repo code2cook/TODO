@@ -10,4 +10,5 @@ RUN python manage.py migrate --run-syncdb
 RUN python manage.py collectstatic --noinput
 
 
-CMD ["python","manage.py","runserver","0.0.0.0:8001"]
+# CMD ["python","manage.py","runserver","0.0.0.0:8001"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8001", "todo.wsgi"]

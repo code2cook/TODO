@@ -9,6 +9,8 @@ import boto3
 
 from .models import foodCard4 as foodCards, Comment
 
+from django.views.decorators.csrf import csrf_exempt
+
 from django.conf import settings
 from django.http import JsonResponse
 
@@ -146,9 +148,10 @@ def dislike_food(request, card_id):
     card.save()
     return JsonResponse({'dislikes': card.dislike_count})
 
+
 def add_comment(request, card_id):
     
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST':
         card = foodCards.objects.get(id=card_id)
         text = request.POST.get('comment_text')
         Comment.objects.create(food_card=card,text=text)
@@ -156,6 +159,7 @@ def add_comment(request, card_id):
         # Comment.objects.create(food_card=card,text=text)
         # comment_list = list(Comments.values())
         response = JsonResponse({'comments': text})
-        response['X-Requested-With'] = 'XMLHttpRequest'
+        
+        # response['X-Requested-With'] = 'XMLHttpRequest'
         return response
     return redirect('home')

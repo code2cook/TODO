@@ -112,16 +112,17 @@
 
                 btn = document.getElementById(`add-comment-button-${formId}`);
                 btn.style.display = '';
+    
 
-                fetch(commentForm.action, {
+                fetch(`/add_comment/${formId}/`, {
                     method: 'POST',
                     body: formData,
-                    headers:{
-                        'X-Requested-With': 'XMLHttpRequest',
-                    },
+                    {% comment %} header: {'X-Requested-With': 'XMLHttpRequest', },  {% endcomment %}
                 })
-                .then(response => response.json())
+                .then(response => response.json() )
                 .then(data =>{
+                    
+                    
                     
                     var ul = document.getElementById(`comment-list-${formId}`);
                     var newLi = document.createElement('li');
